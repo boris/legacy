@@ -1,0 +1,31 @@
+To-Do
+
+"To-do" is a nice "to-do" list for Linux systems. I have tested it on many versions of Ubuntu (since 10.04 to 12.04) and it works great.
+
+1. Requirements
+
+    - Conky: http://conky.sourceforge.net
+    - Text file used as list
+
+2. Configuration
+
+    Create (touch) a file to be used as todo list:
+    $ touch ~/todo.txt
+
+    Edit 'todo' and 'todone' and set $TODO with the path to the file you just touched.
+
+    Add following line to your .conkyrc:
+    ${execi 2 cat ~/todo.txt}
+
+    This line is also on following gist: https://gist.github.com/3896791
+3. Install
+    
+    $ chmod +x todo todone
+    $ ln -s todo /usr/local/bin/todo
+    $ ln -s todone /usr/local/bin/todone
+
+4. Usage
+    
+    $ todo buy mil
+    $ todone <ID>
+
