@@ -1,0 +1,10 @@
+Descripcion: Bot para administrar xen (y posiblemente xcp) utilizando un bot de jabber/gtalk.
+Autor: @cereal_bars
+
+Dependencias python:
+- xmppy (python.xmpp en debian)
+- python jabberbot (git clone git://repo.or.cz/jabberbot.git)
+
+Dependencias ruby:
+- rubygems
+- xmpp4r-simple
