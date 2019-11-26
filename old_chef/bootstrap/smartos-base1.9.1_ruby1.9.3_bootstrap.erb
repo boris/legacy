@@ -1,0 +1,54 @@
+# Tested against joyent's:
+# - base64 1.9.1
+# - percona 1.6.0
+cmd="bash"
+
+if [ "$UID" != "0" ]
+then
+  cmd="sudo $cmd"
+fi
+
+cat <<TEMPLATE | $cmd
+
+set -e
+
+pkgin -fy up
+pkgin -y install ruby193 build-essential gmake
+gem update --system
+gem install chef -v <%= chef_version %> -N
+
+mkdir -p /etc/chef
+
+awk NF > /etc/chef/validation.pem <<'EOP'
+<%= validation_key %>
+EOP
+chmod 0600 /etc/chef/validation.pem
+
+<% if @chef_config[:encrypted_data_bag_secret] -%>
+awk NF > /etc/chef/encrypted_data_bag_secret <<'EOP'
+<%= encrypted_data_bag_secret %>
+EOP
+chmod 0600 /etc/chef/encrypted_data_bag_secret
+<% end -%>
+
+<%# Generate Ohai Hints -%>
+<% unless @chef_config[:knife][:hints].nil? || @chef_config[:knife][:hints].empty? -%>
+mkdir -p /etc/chef/ohai/hints
+
+<% @chef_config[:knife][:hints].each do |name, hash| -%>
+cat > /etc/chef/ohai/hints/<%= name %>.json <<'EOP'
+<%= hash.to_json %>
+EOP
+<% end -%>
+<% end -%>
+
+cat > /etc/chef/client.rb <<'EOP'
+<%= config_content %>
+EOP
+
+cat > /etc/chef/first-boot.json <<'EOP'
+<%= first_boot.to_json %>
+EOP
+
+<%= start_chef %>
+TEMPLATE

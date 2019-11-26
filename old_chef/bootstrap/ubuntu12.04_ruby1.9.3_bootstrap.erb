@@ -1,0 +1,53 @@
+bash -c '
+<%= "export http_proxy=\"#{knife_config[:bootstrap_proxy]}\"" if knife_config[:bootstrap_proxy] -%>
+
+if [ ! -f /usr/bin/chef-client ]; then
+apt-get update
+apt-get install -y libreadline5 libruby1.9.1 ruby1.9.1 ruby1.9.1-dev build-essential wget rubygems1.9.1
+fi
+
+LC_CTYPE=en_US.UTF-8 LANG=en_US.UTF-8 export LC_CTYPE LANG
+
+gem update --system --no-rdoc --no-ri
+gem install ohai --no-rdoc --no-ri --verbose
+gem install chef --no-rdoc --no-ri --verbose <%= bootstrap_version_string %>
+
+for binary in chef-client chef-solo knife ohai restclient shef
+do
+update-alternatives --install /usr/bin/$binary $binary /usr/local/bin/$binary 10
+done
+
+mkdir -p /etc/chef
+
+(
+cat <<'EOP'
+<%= validation_key %>
+EOP
+) > /tmp/validation.pem
+awk NF /tmp/validation.pem > /etc/chef/validation.pem
+rm /tmp/validation.pem
+
+<% if @chef_config[:encrypted_data_bag_secret] -%>
+   (
+   cat <<'EOP'
+   <%= encrypted_data_bag_secret %>
+   EOP
+   ) > /tmp/encrypted_data_bag_secret
+   awk NF /tmp/encrypted_data_bag_secret > /etc/chef/encrypted_data_bag_secret
+   rm /tmp/encrypted_data_bag_secret
+<% end -%>
+
+(
+cat <<'EOP'
+<%= config_content %>
+EOP
+) > /etc/chef/client.rb
+
+(
+cat <<'EOP'
+<%= { "run_list" => @run_list }.to_json %>
+EOP
+) > /etc/chef/first-boot.json
+
+/usr/bin/chef-client -j /etc/chef/first-boot.json -E <%= bootstrap_environment %>'
+

@@ -1,0 +1,7 @@
+
+#Hay contenido antiguo que tiene las imagenes apuntando no a static.
+#p.e. http://www.wayerless.com/2009/07/apple-bloquea-la-sincronizacion-de-itunes-con-el-pre/
+
+rewrite ^/up/(.*) http://static.betazeta.com/$host$request_uri? permanent;
+rewrite ^/wp-content/uploads/(.*) http://static.betazeta.com/$host$request_uri? permanent;
+

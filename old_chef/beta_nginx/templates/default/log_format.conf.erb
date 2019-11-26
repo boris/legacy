@@ -1,0 +1,13 @@
+log_format main '$remote_addr - [ upstream : $proxy_host response time : $upstream_response_time] $remote_user [$time_local]  '
+                           '"$request" $status $body_bytes_sent '
+                           '"$http_referer" "$http_user_agent"'
+                           '"$http_cookie"';
+
+log_format apps '$time_local - $remote_addr - $host - $request_uri - $proxy_host - time: $upstream_response_time - bytes: $body_bytes_sent - response: $status - $http_referer - $http_user_agent';
+
+#$upstream_response_time tengo q pasarlo como string, sino cuando lo sirve con el root, viene en null y no envia el log por ser un json malo..
+log_format fluentd '"t": "$msec", "time":"$time_iso8601", "hostname": "$hostname", "ra":"$remote_addr", "host":"$host", "uri":"$request_uri", "ph":"$proxy_host", "pt":"$upstream_response_time", "st":$status, "ref":"$http_referer", "ua":"$http_user_agent", "rt":$request_time, "bs":$bytes_sent, "bs_body":$body_bytes_sent';
+
+#1-4-all!
+fluentd_tag front.$host.$hostname;
+access_fluentd log_gateway:8888 fluentd;

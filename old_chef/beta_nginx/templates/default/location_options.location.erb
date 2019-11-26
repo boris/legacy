@@ -1,0 +1,3 @@
+<% node[:beta_nginx][:location_options].each_pair do |k,v| -%>
+<%= k %>    <%= v %>;
+<% end -%>

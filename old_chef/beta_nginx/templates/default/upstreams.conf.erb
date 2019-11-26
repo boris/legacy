@@ -1,0 +1,8 @@
+<% node[:beta_nginx][:upstreams].each do |up| -%>
+
+upstream <%= up[:name] %> {
+	<% up[:hosts].each do |host| -%>
+		server <%= host %>:<%= up[:port]%>;
+	<% end -%>
+}
+<% end -%>

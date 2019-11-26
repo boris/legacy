@@ -1,0 +1,47 @@
+global
+  log 127.0.0.1   local0
+  log 127.0.0.1   local1 notice
+  #log loghost    local0 info
+  maxconn 4096
+  #debug
+  #quiet
+  user haproxy
+  group haproxy
+
+defaults
+  log     global
+  mode    http
+  option  httplog
+  option  dontlognull
+  retries 3
+  option redispatch
+  timeout connect 5s
+  timeout client 50s
+  timeout server 50s
+  balance round-robin 
+
+# Custom rules definition
+# Frontend - WebServer
+#
+frontend http
+  maxconn 4000
+  bind 0.0.0.0:<%= node['haproxy']['incoming_port'] %>
+  use_backend servers-http
+
+backend servers-http
+  server testweb01 10.1.0.105:80 weight 1 maxconn <%= node['haproxy']['member_max_connections'] %> check
+  server testweb02 10.1.0.106:80 weight 1 maxconn <%= node['haproxy']['member_max_connections'] %> check
+
+# Admin site with password.
+# Keep it secret! :)
+#
+listen admin
+  bind *:22800 
+	stats enable
+  stats auth betazeta:b3t4z3t4.,
+
+<% if node['haproxy']['enable_admin'] -%>
+listen admin <%= node['haproxy']['admin']['address_bind'] %>:<%= node['haproxy']['admin']['port'] %>
+  mode http
+  stats uri /
+<% end -%>

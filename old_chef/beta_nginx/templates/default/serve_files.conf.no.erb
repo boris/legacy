@@ -1,0 +1,7 @@
+#try_files es relativo al root
+try_files /mantencion.html $uri @backend;
+
+location @backend {
+	proxy_pass http://127.0.0.1:6081;
+	break;
+}

@@ -1,0 +1,11 @@
+location ~ ^(.+\.php)(.*)$ {
+
+	#serve_file tiene un fallback si no existe el archivo lo tira al backend
+	#si el archivo es php pasalo explicitamente al backend. 
+	#(para p.e. con el admin de ipb que usa explicitamente .php..)
+	proxy_pass http://127.0.0.1:6081;
+
+    #Podriamos cambiarlo por esto para procesamiento directo de php
+	#fastcgi_pass   127.0.0.1:9000;
+    break;
+}       
