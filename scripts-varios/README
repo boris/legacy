@@ -1,0 +1,33 @@
+Scripts varios.
+
+* conn: script para conectar a servidores via ssh. Los parametros entre [ ] son opcionales, y en caso de ser omitidos se usarán los valores por default. 
+Modo de uso: 
+$ ./conn <server> [usuario] [puerto]
+
+
+* passwd.sh: crea passwd random de largo definido por el usuario.
+Modo de uso:
+$ ./passwd <largo>
+
+Ejemplo:
+$ ./passwd 30
+uRE6Wbyvl6QmgqXGJQDKXfJeY4xEmv
+
+* backup_mysql.sh: es necesario que explique que hace? Hay que modificar las variables 'user' y 'passwd' en el archivo. Recomiendo utilizarlo con cron.
+
+* vimrc: el contenido de mi vimrc :) quien tenga algun aporte que lo haga llegar.
+Modo de uso:
+Bajar el archivo, renombrarlo a .vimrc y dejarlo en el home de usuario.
+Para Linux: /home/usuario
+Para Mac: /Users/usuario
+
+* Parser: Sistema que monitorea la calidad del aire en Santiago y envia esta info por twitter
+Aun en etapa de desarrollo
+
+* Duplicated.sh: busca dentro de un archivo por lineas duplicadas y las escribe en un archivo de reporte.
+Modo de uso:
+$ ./duplicated.sh file_with_something.{txt,csv,etc}
+$ cat duplicated.txt
+
+
+contacto: boris{at}insert-coin.org

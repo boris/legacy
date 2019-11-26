@@ -1,0 +1,6 @@
+Instalation:
+1. Place show_revoked.sh on /etc/openvpn/easy-rsa/keys
+2. # chmod u+x show_revoked.sh
+
+Usage:
+1. # ./show_revoked.sh index.txt
