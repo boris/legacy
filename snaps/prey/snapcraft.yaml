@@ -1,0 +1,10 @@
+name: prey
+version: "1.6.5"
+summary: Utility for tracking stolen or missing devices.
+description: Some description...
+confinement: strict
+
+parts:
+  prey:
+    plugin: nil
+    source: https://storage.googleapis.com/prey_public/prey-releases/node-client/1.6.5/prey_1.6.5_i386.deb
