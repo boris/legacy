@@ -1,0 +1,15 @@
+---
+layout: listing
+---
+<header class="post-header">
+  {% if page.custom_title%}
+  <h1 class="post-title">{{ page.custom_title }}</h1>
+  {% else %}
+  <h1 class="post-title">{{ page.title }}
+    {% endif %}
+</header>
+
+<div class="post-content">
+  {{ content }}
+</div>
+

@@ -1,0 +1,28 @@
+---
+layout: default
+---
+
+<div class="posts">
+  {% for post in paginator.posts %}
+  <article class="post">
+
+    {{ post.date | date_to_string  }} &raquo; <b><a href="{{ site.baseurl }}{{
+    post.url }}">{{ post.title }}</a></b>
+
+  </article>
+  {% endfor %}
+</div>
+
+<div class="pagination">
+  {% if paginator.previous_page %}
+  <a href="{{ paginator.previous_page_path  }}"
+     class="post-meta">&laquo;</a>
+  {% endif %}
+  <span class="post-meta">{{ paginator.page  }} of {{
+    paginator.total_pages  }}
+    {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path  }}"
+       class="next">&raquo;</a>
+    {% endif %}
+  </span>
+</div>
