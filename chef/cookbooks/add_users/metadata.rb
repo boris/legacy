@@ -1,0 +1,10 @@
+name 'add_users'
+maintainer 'The Authors'
+maintainer_email 'you@example.com'
+license 'all_rights'
+description 'Installs/Configures add_users'
+long_description 'Installs/Configures add_users'
+version '0.1.0'
+
+depends 'users'
+depends 'sudo'

@@ -1,0 +1,6 @@
+---
+hostname: 127.0.0.1
+port: '2200'
+username: vagrant
+ssh_key: "/Users/boris/Code/chef/cookbooks/cx_Oracle/.kitchen/kitchen-vagrant/kitchen-cx_Oracle-default-centos-71/.vagrant/machines/default/virtualbox/private_key"
+last_action: converge

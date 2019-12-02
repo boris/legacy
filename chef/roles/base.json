@@ -1,0 +1,12 @@
+{
+  "name": "base",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "default_attributes": {},
+  "description": "Base role",
+  "run_list": [
+    "recipe[users]"
+  ],
+  "env_run_lists": {},
+  "override_attributes": {}
+}

@@ -1,0 +1,12 @@
+{
+  "id": "boris",
+  "comment": "Boris Quiroz",
+  "shell": "/bin/bash",
+  "groups": [
+    "sudo",
+    "docker"
+  ],
+  "ssh_keys": [
+    "ssh-rsa public key here"
+  ]
+}
