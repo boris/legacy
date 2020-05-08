@@ -1,0 +1,10 @@
+[user]
+  name = Boris Quiroz
+  email = boris@insert-coin.org
+[core]
+  editor = /usr/bin/vim
+[url "git+ssh://borisquiroz@git.launchpad.net/"]
+  insteadof = lp:
+[url "git+ssh://borisquiroz@git.launchpad.net/~borisquiroz/+git/"]
+  insteadof = lpme:
+

@@ -1,0 +1,70 @@
+#
+# Default Tmux Theme
+#
+
+# This theme matches Tmux's default style as closely as possible. It functions
+# as a template for creating new themes, and as a way to reset a running Tmux
+# server's style to it's defaults.
+
+# Status update interval
+set -g status-interval 15
+
+# Basic status bar colors
+set -g status-bg colour235
+set -g status-fg colour243
+
+# Left side of status bar
+set -g status-left-bg colour234
+set -g status-left-fg colour195
+set -g status-left-length 10
+set -g status-left "> "
+
+# Right side of status bar
+set -g status-right-bg colour234
+set -g status-right-fg colour195
+set -g status-right-length 40
+set -g status-right '[%a, %d %b %H:%M GMT%Z]'
+#set -g status-right '[Battery: #{battery_percentage}][%a, %d %b %H:%M %p]'
+
+# Window status
+set -g window-status-format "#I:#W"
+set -g window-status-current-format "[#I: #W ¬]"
+
+# Current window status
+set -g window-status-current-bg colour238
+set -g window-status-current-fg colour255 # white for current window
+
+# Window with activity status
+set -g window-status-activity-bg green # fg and bg are flipped here due to a
+set -g window-status-activity-fg black # bug in tmux
+
+# Window separator
+set -g window-status-separator " "
+
+# Window status alignment
+set -g status-justify left
+set -g status-position bottom
+
+# Pane border
+set -g pane-border-bg default
+set -g pane-border-fg white
+
+# Active pane border
+set -g pane-active-border-bg default
+set -g pane-active-border-fg green
+
+# Pane number indicator
+set -g display-panes-colour blue
+set -g display-panes-active-colour red
+
+# Message
+set -g message-bg yellow
+set -g message-fg black
+
+# Command message
+set -g message-command-bg green
+set -g message-command-fg black
+
+# Mode - top right, when scrolling.
+set -g mode-bg colour232 
+set -g mode-fg colour230

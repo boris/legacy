@@ -1,0 +1,40 @@
+#!/bin/bash
+halp(){
+echo "Options:
+    start: start socks proxy
+    stop: stop socks proxy
+    check: check if proxy is running
+    help: show this help
+"
+}
+
+get_socks_pid(){
+    SSH_PID=`ps ax | grep 'ssh -D' | grep -v grep |awk '{print $1}'`
+}
+
+check(){
+    get_socks_pid
+    if [ ! -z $SSH_PID ]; then
+	echo "Proxy is running with pid: $SSH_PID"
+    else
+	echo "Proxy is not running."
+    fi
+}
+start(){
+    echo "opening socks proxy"
+    ssh -D 31337 -Nf cirrus
+    if [ $? -eq 0 ]; then
+	echo "socks proxy opened!"
+	echo "Run the following to start chromium in proxy mode:
+	chromium-browser --proxy-server=\"socks5://localhost:31337\" --host-resolver-rules=\"MAP * 0.0.0.0 , EXCLUDE localhost\""
+
+    fi
+}
+
+stop(){
+    # echo "Are you sure?"
+    get_socks_pid
+    kill -9 $SSH_PID
+}
+
+$1

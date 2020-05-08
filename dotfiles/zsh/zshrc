@@ -1,0 +1,64 @@
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+export EDITOR=vim
+
+ZSH_THEME="bquiroz"
+plugins=(docker git ruby zsh-syntax-highlighting colorize ubuntu vagrant virtualenv pyenv kubectl)
+
+# User configuration
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/home/boris/.rbenv/shims"
+source $ZSH/oh-my-zsh.sh
+
+# alias
+#alias qw="dig myip.opendns.com @resolver1.opendns.com +short"
+#alias kk="ssh-add ~/.ssh/keys/id_rsa*"
+#alias lg=" git log --graph --pretty=format:'%C(yellow)%h%Creset%C(blue)%d%Creset %C(white bold)%s%Creset %C(white dim)(by %an %ar)%Creset' --all"
+#alias gt="echo \"latest 10 tags\" ; echo \"===============\" ; git tag |sort -n -t . -k 3 | sort -n -t . -k 2 |tail"
+
+# rbenv
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+# Export PATH only once
+#export PATH="$PYENV_ROOT/bin:$HOME/.local/bin:/usr/local/opt/vim@7.4/bin:/home/boris/Downloads/google-cloud-sdk/bin:$PATH"
+#export PATH="$PYENV_ROOT/bin:$HOME/.local/bin:/usr/local/opt/vim@7.4/bin:$PATH"
+
+# Do not share history
+setopt HIST_IGNORE_ALL_DUPS
+setopt no_share_history
+
+# Syntax highlighting
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Go path
+#export GOPATH=$HOME/Code/golang
+#export GOROOT=$GOPATH/bin
+
+# Docker stuffs
+#eval "$(docker-machine env default)"
+
+# Kubectl autocomplete
+#source <(kubectl completion zsh) 
+
+## Powerline for zsh
+#if [[ -r /usr/share/powerline/bindings/zsh/powerline.zsh ]]; then
+#  source /usr/share/powerline/bindings/zsh/powerline.zsh
+#fi
+
+# The next line updates PATH for the Google Cloud SDK.
+#source '/home/boris/Downloads/google-cloud-sdk/path.zsh.inc'
+#source '/home/boris/Downloads/google-cloud-sdk/completion.zsh.inc'
+
+# AWS enable aws cli compltion
+source ~/.pyenv/versions/3.6.1/bin/aws_zsh_completer.sh
+
+# Lastpass login on terminal
+export LPASS_DISABLE_PINENTRY=1
+
+# Export PATH
+export PATH="/home/boris/.pyenv/bin:/home/boris/.local/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+

@@ -1,0 +1,2 @@
+export KOPS_STATE_STORE=s3://k8s-zsh-io-state-store
+export CLUSTER_NAME=stg.ue1.k8s.local

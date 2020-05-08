@@ -1,0 +1,30 @@
+{
+    "containerDefinitions":
+    [
+	{
+	    "name": "<container_name>",
+	    "image": "<image:tag>",
+	    "cpu": 64,
+	    "memory": 128,
+	    "essential": true,
+	    "environment": [
+		{
+		    "name": "ONE_VAR",
+		    "value": "<one_value>"
+		},{
+		    "name": "OTHER_VAR",
+		    "value": "<other_value>"
+		}
+	    ],
+	    "logConfiguration": {
+		"logDriver": "awslogs",
+		"options": {
+		    "awslogs-group": "<LogGroup>",
+		    "awslogs-region": "us-east-1",
+		    "awslogs-stream-prefix": "<prefix>"
+		}
+	    }
+	}
+    ],
+    "family": "<Task-Definition-Name>"
+}

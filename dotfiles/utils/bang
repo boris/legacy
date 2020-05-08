@@ -1,0 +1,52 @@
+#!/bin/bash
+
+DIR="/home/boris/.ssh"
+
+backup() {
+    mv $DIR/config $DIR/`date +%Y%m%d`.config.original
+}
+
+base(){
+    find $DIR -type f -iname "personal-config" -exec cat {} + >> $DIR/new_config
+}
+
+cat() {
+    find $DIR -type f -iname "config*" -exec cat {} + >> $DIR/new_config
+    mv $DIR/new_config $DIR/config
+}
+
+clean(){
+    find $DIR -type f -iname "*.config.original" -mtime +30 -delete
+}
+
+bang() {
+    echo "=> Backing up current ssh config"
+    backup
+    if [ $? -eq 0 ]; then
+	echo -e "\e[32mSuccess\e[0m"
+    else
+	echo -e "\e[31mFailed. Exiting\e[0m"
+	exit 1
+    fi
+
+    echo "=> Creating new ssh config file"
+    base
+    cat
+    if [ $? -eq 0 ]; then
+	echo -e "\e[32mSuccess\e[0m"
+    else
+	echo -e "\e[32mFailed. Exiting\e[0m"
+	exit 1
+    fi
+    echo "=> Removing old backups"
+    if [ $? -eq 0  ]; then
+	echo -e "\e[32mSuccess\e[0m"
+    else
+	echo -e "\e[32mFailed. Exiting\e[0m"
+	exit 1
+    fi
+
+    clean
+}
+
+bang

@@ -1,0 +1,98 @@
+#!/bin/bash
+
+vpn=$2
+
+get_names(){
+    if [ $vpn == 'prod' ]; then
+	conn='tlon'
+	inet='tun0'
+    elif [ $vpn == 'staging'  ]; then
+	conn='orbistertius'
+	inet='tun1'
+    elif [ $vpn == 'dev' ]; then
+	conn='uqbar'
+	inet='tun2'
+    elif [ $vpn == 'corp' ]; then
+	conn='rocinante'
+	inet='tun3'
+    elif [ $vpn == 'unholster' ]; then
+	conn='unholster'
+	inet='tun4'
+    else
+	echo "Invalid option. Use 'prod', 'staging', 'dev', 'corp'"
+	exit 1
+    fi
+}
+
+message(){
+    get_names
+    echo "=> Adding password to clipboard"
+    lpass show -c --password $conn
+    echo -e "\e[32m   done \e[0m"
+}
+
+check(){
+    get_names
+    ps faux | grep $conn | grep -v grep > /dev/null
+    if [ $? -eq 0 ]; then
+	echo -e "=> VPN \e[32m$vpn\e[0m is running:"
+	echo "   - pid: `ps faux | grep $conn | grep -v grep | awk '{print $2}'`"
+	echo "   - command: `ps faux | grep $conn | grep -v grep | awk '{print $12" "$13" "$14}'`"
+	echo "   - IPv4: `ip addr |grep "global $inet" | awk '{print $2}'`"
+	echo ""
+    else
+	echo "Not running. Do you want to connect? (y/n)"
+	read answer
+	if [ "$answer" == "y" ]; then
+	    connect
+	else
+	    echo "Ok, bye."
+	fi
+    fi
+}
+
+disconnect(){
+    get_names
+    pid=`ps faux | grep $conn | grep -v grep | awk '{print $2}'`
+    sudo kill -9 $pid
+}
+
+all(){
+    for name in prod staging
+    do
+	echo -e "=> Checking \e[32m$name\e[0m VPN."
+	bpn check $name
+    done
+}
+
+connect(){
+    message
+    echo "=> Connecting to $vpn vpn"
+    if [ $vpn == 'unholster' ]; then
+	cat ~/.dotfiles/utils/creds
+	sudo openvpn --config /etc/openvpn/boris.quiroz.ovpn --daemon
+    else
+	sudo openvpn --config /home/boris/Xapo/ovpn/$conn.ovpn --daemon
+	if [ $? -eq 0 ]; then
+    	    echo -e "\e[32m   done \e[0m"
+    	else
+    	    echo -e "\e[31m   failed! \e0[m"
+    	    exit 1
+    	fi
+    fi
+}
+
+halp(){
+    echo -e "\e[32mOptions\e[0m: 
+    - check: verify if vpn is running
+    - connect: start a new vpn connection
+
+\e[32mParameters\e[0m:
+    - dev
+    - unholster
+    - prod
+    - corp
+    - staging"
+}
+
+$1
