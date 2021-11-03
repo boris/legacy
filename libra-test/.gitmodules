@@ -1,0 +1,9 @@
+[submodule "libra"]
+	path = libra
+	url = https://github.com/libra/libra.git
+[submodule "libra-core"]
+	path = libra-core
+	url = https://github.com/libra/libra.git
+[submodule "libra_core"]
+	path = libra_core
+	url = https://github.com/libra/libra.git
